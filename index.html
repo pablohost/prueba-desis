@@ -10,90 +10,116 @@
         <title>PRUEBA DE DIAGNOSTICO</title> 
         <meta name="description" content="Se deberá desarrollar un Sistema de Votación. La interfaz deberá validar y
     guardar los datos del formulario en una base de datos."/>
+
+        <style>
+            .w-200{
+                width: 200px;
+            }
+            .w-100p{
+                width: 100%;
+            }
+            .input-box{
+                display: flex;
+                padding-bottom: .5rem;
+            }
+        </style>
     </head> 
     <body> 
-        <div class="" id="form-box" style="border: 1px solid black;padding: 1rem;"> 
-            <section class=""> 
-                <h3 class="">FORMULARIO DE VOTACIÓN:</h3>
-                <div class=""> 
-                    <div class="" style="border-top: 1px solid black;border-left: 1px solid black;padding: 0.5rem;"> 
-                        <form id="contact-form" action="script/controller/mail.js" method="POST" name="formContacto"> 
-                            <!--NOMBRE Y APELLIDO--> 
-                            <div class="" style="padding-bottom: 15px;"> 
-                                <div class=""> 
-                                    <div class="">
-                                        <span>Nombre y Apellido</span>
-                                        <input type="text" id="txtCorreo" class="" placeholder="NOMBRE Y APELLIDO" name="Correo">
-                                    </div> 
-                                </div> 
+        <div class=""> 
+            <section class="" id="form-box" style="border: 1px solid black;padding: 1rem;"> 
+                <div class="">
+                    <h3 class="">FORMULARIO DE VOTACIÓN:</h3>
+                </div>
+                <div class="" style="border-top: 1px solid black;border-left: 1px solid black;padding: 0.5rem;"> 
+                    <form id="contact-form" action="script/controller/mail.js" method="POST" name="formContacto"> 
+                        <!--NOMBRE Y APELLIDO--> 
+                        <div class="input-box"> 
+                            <div class="w-200">
+                                <span>Nombre y Apellido</span>
+                            </div>
+                            <div class="w-200">
+                                <input type="text" id="full_name" class="w-100p" placeholder="" name="full_name" required>
                             </div> 
-                            <!--ALIAS--> 
-                            <div class="" style="padding-bottom: 15px;"> 
-                                <div class=""> 
-                                    <div class="">
-                                        <span>Alias</span>
-                                        <input type="text" id="txtCorreo" class="" placeholder="ALIAS" name="Correo">
-                                    </div> 
-                                </div> 
+                        </div> 
+                        <!--ALIAS--> 
+                        <div class="input-box"> 
+                            <div class="w-200">
+                                <span>Alias</span>
+                            </div>
+                            <div class="w-200">
+                                <input type="text" id="alias" class="w-100p" placeholder="" name="alias" required>
                             </div> 
-                            <!--RUT--> 
-                            <div class="" style="padding-bottom: 15px;"> 
-                                <div class=""> 
-                                    <div class="">
-                                        <span>RUT</span>
-                                        <input type="text" id="txtCorreo" class="" placeholder="RUT" name="Correo">
-                                    </div> 
-                                </div> 
+                        </div> 
+                        <!--RUT-->
+                        <div class="input-box"> 
+                            <div class="w-200">
+                                <span>RUT</span>
+                            </div>
+                            <div class="w-200">
+                                <input type="text" id="rut" class="w-100p" placeholder="" name="rut" required>
                             </div> 
-                            <!--EMAIL--> 
-                            <div class="" style="padding-bottom: 15px;"> 
-                                <div class=""> 
-                                    <div class="">
-                                        <span>Email</span>
-                                        <input type="text" id="txtCorreo" class="" placeholder="EMAIL" name="Correo">
-                                    </div> 
-                                </div> 
+                        </div>
+                        <!--EMAIL-->
+                        <div class="input-box"> 
+                            <div class="w-200">
+                                <span>Email</span>
+                            </div>
+                            <div class="w-200">
+                                <input type="text" id="email" class="w-100p" placeholder="" name="email" required>
                             </div> 
-                            <!--REGION--> 
-                            <div class="">
+                        </div>
+                        <!--REGION-->
+                        <div class="input-box"> 
+                            <div class="w-200">
                                 <span>Región</span>
-                                <select name="cars" id="cars">
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
+                            </div>
+                            <div class="w-200">
+                                <select name="region" id="region" class="w-100p">
+                                  <option value="0"></option>
                                 </select>
                             </div> 
-                            <!--COMUNA--> 
-                            <div class="">
+                        </div>
+                        <!--COMUNA-->
+                        <div class="input-box"> 
+                            <div class="w-200">
                                 <span>Comuna</span>
-                                <select name="cars" id="cars">
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
+                            </div>
+                            <div class="w-200">
+                                <select name="comuna" id="comuna" class="w-100p">
+                                  <option value="0"></option>
                                 </select>
                             </div> 
-                            <!--CANDIDATO--> 
-                            <div class="">
+                        </div>
+                        <!--CANDIDATO-->
+                        <div class="input-box"> 
+                            <div class="w-200">
                                 <span>Candidato</span>
-                                <select name="cars" id="cars">
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
+                            </div>
+                            <div class="w-200">
+                                <select name="candidato" id="candidato" class="w-100p">
+                                  <option value="0"></option>
                                 </select>
-                            </div>
-                            <!--COMO SE ENTERO DE NOSOTROS--> 
-                            <div class="">
+                            </div> 
+                        </div>
+                        <!--COMO SE ENTERO DE NOSOTROS-->
+                        <div class="input-box"> 
+                            <div class="w-200">
                                 <span>Como se enteró de Nosotros</span>
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Web"><span>Web</span>
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Tv"><span>Tv</span>
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Redes Sociales"><span>Redes Sociales</span>
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Amigo"><span>Amigo</span>
                             </div>
-                            <!--VOTAR--> 
-                            <p> 
-                                <button class="" id="btnEnviar" type="button"> 
-                                    <span class="">Votar</span> 
-                                </button> 
-                            </p>
-                        </form>
-                    </div>
+                            <div class="">
+                                <input type="checkbox" id="howto[0]" name="howto[0]" value="Web"><span>Web</span>
+                                <input type="checkbox" id="howto[1]" name="howto[1]" value="Tv"><span>Tv</span>
+                                <input type="checkbox" id="howto[2]" name="howto[2]" value="Redes Sociales"><span>Redes Sociales</span>
+                                <input type="checkbox" id="howto[3]" name="howto[3]" value="Amigo"><span>Amigo</span>
+                            </div> 
+                        </div>
+                        <!--VOTAR--> 
+                        <div class=""> 
+                            <button class="" id="btnEnviar" type="submit"> 
+                                <span class="">Votar</span> 
+                            </button> 
+                        </div>
+                    </form>
                 </div>
             </section> 
         </div>
@@ -101,8 +127,8 @@
         <!--script jquery--> 
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
         
-        <script src="script/controller/controlador.js?v2023-1"></script> 
-        <script src="script/js/Index.js?v2023-1"></script> 
+        <script src="script/controller/index.php?v2023-1"></script> 
+        <script src="script/js/index.js?v2023-1"></script> 
         
         <script type="text/javascript">
 
