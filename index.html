@@ -12,17 +12,17 @@
     guardar los datos del formulario en una base de datos."/>
     </head> 
     <body> 
-        <div class="" id="form-box"> 
+        <div class="" id="form-box" style="border: 1px solid black;padding: 1rem;"> 
             <section class=""> 
-                <h6 class="">FORMULARIO DE VOTACIÓN:</h6> 
-                <hr> 
+                <h3 class="">FORMULARIO DE VOTACIÓN:</h3>
                 <div class=""> 
-                    <div class=""> 
+                    <div class="" style="border-top: 1px solid black;border-left: 1px solid black;padding: 0.5rem;"> 
                         <form id="contact-form" action="script/controller/mail.js" method="POST" name="formContacto"> 
                             <!--NOMBRE Y APELLIDO--> 
                             <div class="" style="padding-bottom: 15px;"> 
                                 <div class=""> 
-                                    <div class=""> 
+                                    <div class="">
+                                        <span>Nombre y Apellido</span>
                                         <input type="text" id="txtCorreo" class="" placeholder="NOMBRE Y APELLIDO" name="Correo">
                                     </div> 
                                 </div> 
@@ -30,7 +30,8 @@
                             <!--ALIAS--> 
                             <div class="" style="padding-bottom: 15px;"> 
                                 <div class=""> 
-                                    <div class=""> 
+                                    <div class="">
+                                        <span>Alias</span>
                                         <input type="text" id="txtCorreo" class="" placeholder="ALIAS" name="Correo">
                                     </div> 
                                 </div> 
@@ -38,7 +39,8 @@
                             <!--RUT--> 
                             <div class="" style="padding-bottom: 15px;"> 
                                 <div class=""> 
-                                    <div class=""> 
+                                    <div class="">
+                                        <span>RUT</span>
                                         <input type="text" id="txtCorreo" class="" placeholder="RUT" name="Correo">
                                     </div> 
                                 </div> 
@@ -46,38 +48,43 @@
                             <!--EMAIL--> 
                             <div class="" style="padding-bottom: 15px;"> 
                                 <div class=""> 
-                                    <div class=""> 
+                                    <div class="">
+                                        <span>Email</span>
                                         <input type="text" id="txtCorreo" class="" placeholder="EMAIL" name="Correo">
                                     </div> 
                                 </div> 
                             </div> 
                             <!--REGION--> 
-                            <div class=""> 
+                            <div class="">
+                                <span>Región</span>
                                 <select name="cars" id="cars">
                                   <option value="1">1</option>
                                   <option value="2">2</option>
                                 </select>
                             </div> 
                             <!--COMUNA--> 
-                            <div class=""> 
+                            <div class="">
+                                <span>Comuna</span>
                                 <select name="cars" id="cars">
                                   <option value="1">1</option>
                                   <option value="2">2</option>
                                 </select>
                             </div> 
                             <!--CANDIDATO--> 
-                            <div class=""> 
+                            <div class="">
+                                <span>Candidato</span>
                                 <select name="cars" id="cars">
                                   <option value="1">1</option>
                                   <option value="2">2</option>
                                 </select>
                             </div>
                             <!--COMO SE ENTERO DE NOSOTROS--> 
-                            <div class=""> 
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Web">
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Tv">
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Redes Sociales">
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Amigo">
+                            <div class="">
+                                <span>Como se enteró de Nosotros</span>
+                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Web"><span>Web</span>
+                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Tv"><span>Tv</span>
+                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Redes Sociales"><span>Redes Sociales</span>
+                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Amigo"><span>Amigo</span>
                             </div>
                             <!--VOTAR--> 
                             <p> 
