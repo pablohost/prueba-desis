@@ -31,7 +31,7 @@
                     <h3 class="">FORMULARIO DE VOTACIÓN:</h3>
                 </div>
                 <div class="" style="border-top: 1px solid black;border-left: 1px solid black;padding: 0.5rem;"> 
-                    <form id="contact-form" action="script/controller/mail.js" method="POST" name="formContacto"> 
+                    <form id="vota-form" action="script/controller/index.php" method="POST" name="vota-form"> 
                         <!--NOMBRE Y APELLIDO--> 
                         <div class="input-box"> 
                             <div class="w-200">
@@ -74,8 +74,8 @@
                                 <span>Región</span>
                             </div>
                             <div class="w-200">
-                                <select name="region" id="region" class="w-100p">
-                                  <option value="0"></option>
+                                <select name="region" id="region" class="w-100p" required>
+                                  <option value="0" selected="selected"></option>
                                 </select>
                             </div> 
                         </div>
@@ -85,7 +85,7 @@
                                 <span>Comuna</span>
                             </div>
                             <div class="w-200">
-                                <select name="comuna" id="comuna" class="w-100p">
+                                <select name="comuna" id="comuna" class="w-100p" required>
                                   <option value="0"></option>
                                 </select>
                             </div> 
@@ -96,7 +96,7 @@
                                 <span>Candidato</span>
                             </div>
                             <div class="w-200">
-                                <select name="candidato" id="candidato" class="w-100p">
+                                <select name="candidato" id="candidato" class="w-100p" required>
                                   <option value="0"></option>
                                 </select>
                             </div> 
@@ -107,10 +107,10 @@
                                 <span>Como se enteró de Nosotros</span>
                             </div>
                             <div class="">
-                                <input type="checkbox" id="howto[0]" name="howto[0]" value="Web"><span>Web</span>
-                                <input type="checkbox" id="howto[1]" name="howto[1]" value="Tv"><span>Tv</span>
-                                <input type="checkbox" id="howto[2]" name="howto[2]" value="Redes Sociales"><span>Redes Sociales</span>
-                                <input type="checkbox" id="howto[3]" name="howto[3]" value="Amigo"><span>Amigo</span>
+                                <input type="checkbox" id="howto[0]" name="howto" value="Web"><span>Web</span>
+                                <input type="checkbox" id="howto[1]" name="howto" value="Tv"><span>Tv</span>
+                                <input type="checkbox" id="howto[2]" name="howto" value="Redes Sociales"><span>Redes Sociales</span>
+                                <input type="checkbox" id="howto[3]" name="howto" value="Amigo"><span>Amigo</span>
                             </div> 
                         </div>
                         <!--VOTAR--> 
