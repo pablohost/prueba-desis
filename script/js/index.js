@@ -1,5 +1,5 @@
 $(function(){
-    //getComboBoxes();
+    getComboBoxes();
     /*
     function enviarCorreo(){
         $.ajax({
@@ -69,7 +69,28 @@ $(function(){
         if (msg_error != "") {
             alert(msg_error);
         }else{
+            console.log(e);
+            console.log($(this).serialize());
             //sendVote();
+        }
+    });
+
+    $("#region").change(function(e) {
+        e.preventDefault();
+        /*
+        * Validacion de datos antes de enviar
+        * @param int n_howto Cantidad de checkboxes “Como se enteró de Nosotros” seleccionados
+        * @param string emailCheck regEx para validar email
+        * @param string aliasCheck regEx para validar alias
+        * @param string msg_error Mensaje a enviar en caso de encontrar errores
+        */
+        if ($(this).val() != 0) {
+            $('#comuna').empty();
+            for (var i = 0; i < global_comunas.length; i++) {
+                if (global_comunas[i].region == $(this).find('option:selected').text()) {
+                    $('#comuna').append('<option value="'+global_comunas[i].id+'">'+global_comunas[i].comuna+'</option>');
+                }
+            }
         }
     });
 
@@ -95,14 +116,35 @@ $(function(){
     }
 });
 
+var global_regiones = [];
+var global_comunas = [];
+
 function getComboBoxes(){
     $.ajax({
       type: "GET",
       url: 'script/controller/get_comboboxes.php',
       success: function (response) {
         let comboboxes=JSON.parse(response);
-        console.log(response);
-        console.log(comboboxes);
+        $('#candidato').empty();
+        $('#region').empty();
+        $('#comuna').empty();
+
+        for (var i = 0; i < comboboxes.candidatos.length; i++) {
+            $('#candidato').append('<option value="'+comboboxes.candidatos[i].id+'">'+comboboxes.candidatos[i].candidato+'</option>');
+        }
+
+        for (var i = 0; i < comboboxes.regiones.length; i++) {
+            $('#region').append('<option value="'+comboboxes.regiones[i].id+'">'+comboboxes.regiones[i].region+'</option>');
+        }
+
+        for (var i = 0; i < comboboxes.comunas.length; i++) {
+            if (comboboxes.comunas[i].region == 'Region de Arica y Parinacota') {
+                $('#comuna').append('<option value="'+comboboxes.comunas[i].id+'">'+comboboxes.comunas[i].comuna+'</option>');
+            }
+        }
+
+        global_regiones = comboboxes.regiones;
+        global_comunas = comboboxes.comunas;
       },
       error: function ( e ) {
         console.log(e);
