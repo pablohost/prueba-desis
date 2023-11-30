@@ -70,7 +70,7 @@ $(function(){
             msg_error += "Combo Box Comuna No deberá quedar en blanco \n";
         }
         //Combo Box Candidato No deberá quedar en blanco
-        if (("#candidato").val() == "" && $("#candidato").val() == "0") {
+        if ($("#candidato").val() == "" && $("#candidato").val() == "0") {
             msg_error += "Combo Box Candidato No deberá quedar en blanco \n";
         }
         //Checkbox “Como se enteró de Nosotros”: Debe elegir al menos dos opciones.
@@ -82,9 +82,8 @@ $(function(){
             alert(msg_error);
         }else{
             console.log(e);
-            console.log($(this).serialize());
-            $(this).submit();
-            //sendVote();
+            console.log($(this).serializeArray());
+            sendVote();
         }
     });
 
@@ -157,6 +156,38 @@ function getComboBoxes(){
 
         global_regiones = comboboxes.regiones;
         global_comunas = comboboxes.comunas;
+      },
+      error: function ( e ) {
+        console.log(e);
+      }
+    });
+}
+
+/*
+* Carga voto en la base de datos
+*/
+function sendVote(){
+    let arr_form = $('[name=vota-form]').serializeArray();
+    let arr_howto = [];
+
+    $("[name='howto']:checked").each(function name(key, params) {
+        console.log($(this).val());
+        //arr_howto[] = {name:"howto", value:$(this).val()};
+        arr_howto.push({name:"howto", value:$(this).val()});
+    });
+    arr_form.push(arr_howto);
+
+    console.log(arr_form);
+    console.log(JSON.stringify({request: arr_form}));
+
+    $.ajax({
+      type: "POST",
+      url: 'script/controller/index.php',
+      data: JSON.stringify(arr_form),
+      success: function (response) {
+        console.log(response);
+        console.log(JSON.parse(response));
+        
       },
       error: function ( e ) {
         console.log(e);
