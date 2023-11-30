@@ -1,92 +1,136 @@
 <?php
 require('database.php');
 
-mysqli_set_charset($connection,"utf8");
+//$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
-$comboboxes['regiones'] = getRegiones($connection);
-$comboboxes['comunas'] = getComunas($connection);
-$comboboxes['candidatos'] = getCandidatos($connection);
+$comboboxes['regiones'] = getRegiones($conn);
+$comboboxes['comunas'] = getComunas($conn);
+$comboboxes['candidatos'] = getCandidatos($conn);
 
 echo json_encode($comboboxes);
 
-function getRegiones($connection)
+function getRegiones($conn)
 {
-	$sql = "SELECT re.id as id, re.msg as region 
-			FROM region as re 
-			WHERE re.status=0;";
+	// iniciar transacción 
+	$conn->beginTransaction();
+	try { 
+	    $sql = "SELECT re.id as id, re.msg as region 
+				FROM region as re 
+				WHERE re.status=0;";
 
-	$query = mysqli_query($connection, $sql);
-	$regiones = array();
+		$result = $conn->prepare($sql);
+		// Especificamos el fetch mode antes de llamar a fetch()
+	    $result->setFetchMode(PDO::FETCH_ASSOC);
+	    $result->execute(); 
+	    //Comprobamos si encontro el registro
+	    $rows=$result->rowCount();
 
-	//Obtiene la cantidad de filas que hay en la consulta
-	$rows = mysqli_num_rows($query);
-	//Si no existe ninguna fila, devuelvo array vacio
-	if ($rows === 0) {
+		$regiones = array();
+
+		//Obtiene la cantidad de filas que hay en la consulta
+		//Si no existe ninguna fila, devuelvo array vacio
+		if ($rows === 0) {
+			$conn->commit();
+			return $regiones;
+		} else {
+			//La variable $result contiene el array que se genera en la consulta, así que obtenemos los datos y los mostramos en un bucle
+			while($row = $result->fetch()) {
+				$arr_tmp['id'] = $row['id'];
+				$arr_tmp['region'] = $row['region'];
+				array_push($regiones, $arr_tmp);
+			};//Fin while $result
+		}; //Fin else $rows
+		//Devolvemos el array
+		$conn->commit();
 		return $regiones;
-	} else {
-		//La variable $response contiene el array que se genera en la consulta, así que obtenemos los datos y los mostramos en un bucle
-		while($response = mysqli_fetch_assoc($query)) {
-			$arr_tmp['id'] = $response['id'];
-			$arr_tmp['region'] = $response['region'];
-			array_push($regiones, $arr_tmp);
-		};//Fin while $response
-	}; //Fin else $rows
-	//Devolvemos el array
-	return $regiones;
+	} catch (PDOException $e) { 
+		// si ocurre un error hacemos rollback para anular todos los insert 
+		$conn->rollback();
+		return array($e->getMessage()); 
+	}
 }
 
-function getComunas($connection)
+function getComunas($conn)
 {
-	$sql = "SELECT co.id as id, co.msg as comuna, re.msg as region  
-			FROM comuna as co 
-			INNER JOIN region as re ON re.id = co.region 
-			WHERE co.status=0;";
+	// iniciar transacción 
+	$conn->beginTransaction();
+	try { 
+	    $sql = "SELECT co.id as id, co.msg as comuna, re.msg as region  
+				FROM comuna as co 
+				INNER JOIN region as re ON re.id = co.region 
+				WHERE co.status=0;";
 
-	$query = mysqli_query($connection, $sql);
-	$comunas = array();
+		$result = $conn->prepare($sql);
+		// Especificamos el fetch mode antes de llamar a fetch()
+	    $result->setFetchMode(PDO::FETCH_ASSOC);
+	    $result->execute(); 
+	    //Comprobamos si encontro el registro
+	    $rows=$result->rowCount();
 
-	//Obtiene la cantidad de filas que hay en la consulta
-	$rows = mysqli_num_rows($query);
-	//Si no existe ninguna fila, devuelvo array vacio
-	if ($rows === 0) {
+		$comunas = array();
+
+		//Obtiene la cantidad de filas que hay en la consulta
+		//Si no existe ninguna fila, devuelvo array vacio
+		if ($rows === 0) {
+			$conn->commit();
+			return $comunas;
+		} else {
+			//La variable $result contiene el array que se genera en la consulta, así que obtenemos los datos y los mostramos en un bucle
+			while($row = $result->fetch()) {
+				$arr_tmp['id'] = $row['id'];
+				$arr_tmp['comuna'] = $row['comuna'];
+				$arr_tmp['region'] = $row['region'];
+				array_push($comunas, $arr_tmp);
+			};//Fin while $result
+		}; //Fin else $rows
+		//Devolvemos el array
+		$conn->commit();
 		return $comunas;
-	} else {
-		//La variable $response contiene el array que se genera en la consulta, así que obtenemos los datos y los mostramos en un bucle
-		while($response = mysqli_fetch_assoc($query)) {
-			$arr_tmp['id'] = $response['id'];
-			$arr_tmp['comuna'] = $response['comuna'];
-			$arr_tmp['region'] = $response['region'];
-			array_push($comunas, $arr_tmp);
-		};//Fin while $response
-	}; //Fin else $rows
-	//Devolvemos el array
-	return $comunas;
+	} catch (PDOException $e) { 
+		// si ocurre un error hacemos rollback para anular todos los insert 
+		$conn->rollback();
+		return array($e->getMessage()); 
+	}
 }
 
-function getCandidatos($connection)
+function getCandidatos($conn)
 {
-	$sql = "SELECT ca.id as id, ca.msg as candidato  
-			FROM candidato as ca 
-			WHERE ca.status=0;";
+	// iniciar transacción 
+	$conn->beginTransaction();
+	try { 
+	    $sql = "SELECT ca.id as id, ca.msg as candidato  
+				FROM candidato as ca 
+				WHERE ca.status=0;";
 
-	$query = mysqli_query($connection, $sql);
-	$candidatos = array();
+		$result = $conn->prepare($sql);
+		// Especificamos el fetch mode antes de llamar a fetch()
+	    $result->setFetchMode(PDO::FETCH_ASSOC);
+	    $result->execute(); 
+	    //Comprobamos si encontro el registro
+	    $rows=$result->rowCount();
 
-	//Obtiene la cantidad de filas que hay en la consulta
-	$rows = mysqli_num_rows($query);
-	//Si no existe ninguna fila, devuelvo array vacio
-	if ($rows === 0) {
+		$candidatos = array();
+
+		//Obtiene la cantidad de filas que hay en la consulta
+		//Si no existe ninguna fila, devuelvo array vacio
+		if ($rows === 0) {
+			$conn->commit();
+			return $candidatos;
+		} else {
+			//La variable $result contiene el array que se genera en la consulta, así que obtenemos los datos y los mostramos en un bucle
+			while($row = $result->fetch()) {
+				$arr_tmp['id'] = $row['id'];
+				$arr_tmp['candidato'] = $row['candidato'];
+				array_push($candidatos, $arr_tmp);
+			};//Fin while $result
+		}; //Fin else $rows
+		//Devolvemos el array
+		$conn->commit();
 		return $candidatos;
-	} else {
-		//La variable $response contiene el array que se genera en la consulta, así que obtenemos los datos y los mostramos en un bucle
-		while($response = mysqli_fetch_assoc($query)) {
-			$arr_tmp['id'] = $response['id'];
-			$arr_tmp['candidato'] = $response['candidato'];
-			array_push($candidatos, $arr_tmp);
-		};//Fin while $response
-	}; //Fin else $rows
-	//Devolvemos el array
-	return $candidatos;
+	} catch (PDOException $e) { 
+		// si ocurre un error hacemos rollback para anular todos los insert 
+		$conn->rollback();
+		return array($e->getMessage()); 
+	}
 }
 ?>

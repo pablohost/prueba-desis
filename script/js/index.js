@@ -167,23 +167,28 @@ function getComboBoxes(){
 * Carga voto en la base de datos
 */
 function sendVote(){
-    let arr_form = $('[name=vota-form]').serializeArray();
+    var data = {};
+    let arr_form = $('[name=vota-form]').serializeArray().map(function(x){
+        data[x.name] = x.value;
+    });
     let arr_howto = [];
-
+    let str_tmp = "";
     $("[name='howto']:checked").each(function name(key, params) {
         console.log($(this).val());
+        str_tmp += $(this).val()+",";
         //arr_howto[] = {name:"howto", value:$(this).val()};
-        arr_howto.push({name:"howto", value:$(this).val()});
+        //arr_howto.push({name:"howto", value:$(this).val()});
     });
-    arr_form.push(arr_howto);
+    data.howto = str_tmp;
+    //arr_form.push(arr_howto);
 
-    console.log(arr_form);
-    console.log(JSON.stringify({request: arr_form}));
+    console.log(data);
+    console.log(JSON.stringify(data));
 
     $.ajax({
       type: "POST",
       url: 'script/controller/index.php',
-      data: JSON.stringify(arr_form),
+      data: {"request" : JSON.stringify(data)},
       success: function (response) {
         console.log(response);
         console.log(JSON.parse(response));
