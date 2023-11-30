@@ -1,44 +1,30 @@
 <?php
+//Conexion PDO a la base de datos
 require('database.php');
 
+//Verifico si viene el request
 if (isset($_POST["request"])) {
 	$request = json_decode($_POST["request"]);
 
+	//Verifico si el rut ya voto
 	if (rut_exists($request->rut, $conn)) {
-		echo json_encode('{"response": "Rut ya tiene un voto ingresado"}');
+		echo json_encode(array("response"=>"Rut ya tiene un voto ingresado"));
 	}else{
+		//Registro de voto
 		if (set_votacion($request, $conn)) {
-			echo json_encode('{"response": "Voto registrado exitosamente"}');
+			echo json_encode(array("response"=>"Voto registrado exitosamente"));
 		}else{
-			echo json_encode('{"response": "Error, intente otra vez"}');
+			echo json_encode(array("response"=>"Error, intente otra vez"));
 		}
 	}
 }
 
-
-//echo $request;
 /*
-if (rut_exists($request->rut, $conn)) {
-	echo json_encode('{"response": "Rut puede votar"}');
-}else{
-	echo json_encode('{"response": "Rut ya tiene un voto ingresado"}');
-}
+* Guardo en la base de datos la votacion
+* @param JSON $request JSON con toda la informacion del formulario
+* @param PDO $conn Variable de conexion PDO a la base de datos
+* @return boolean TRUE: Se guardo correctamente, FALSE: Hubo un error
 */
-//echo json_encode($_POST);
-//var_dump($_POST);
-/*
-foreach ($_POST as $key => $value) {
-    echo "Field ".$key." is ".$value."<br>";
-}
-*/
-/*
-$comboboxes['regiones'] = getRegiones($connection);
-$comboboxes['comunas'] = getComunas($connection);
-$comboboxes['candidatos'] = getCandidatos($connection);
-
-echo json_encode($comboboxes);
-*/
-
 function set_votacion($request, $conn)
 {
 	// iniciar transacción 
@@ -57,16 +43,22 @@ function set_votacion($request, $conn)
 		$result->bindValue(':howto', $request->howto, PDO::PARAM_STR);
 	    $result->execute(); 
 	    
+	    //Devolvemos TRUE
 	    $conn->commit();
 	    return true;
 	} catch (PDOException $e) { 
 		// si ocurre un error hacemos rollback para anular todos los insert 
 		$conn->rollback();
-		echo $e->getMessage();
 		return false; 
 	}
 }
 
+/*
+* Verifico si el RUT ya tiene un voto registrado
+* @param string $rut Rut de la persona que registra su voto
+* @param PDO $conn Variable de conexion PDO a la base de datos
+* @return boolean TRUE: Rut ya voto, FALSE: Rut puede votar
+*/
 function rut_exists($rut, $conn)
 {
 	// iniciar transacción 
@@ -99,7 +91,7 @@ function rut_exists($rut, $conn)
 	} catch (PDOException $e) { 
 		// si ocurre un error hacemos rollback para anular todos los insert 
 		$conn->rollback();
-		return false; 
+		return true; 
 	}
 }
 

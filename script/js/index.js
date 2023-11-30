@@ -1,36 +1,6 @@
 $(function(){
+    //Accion que carga los comboboxes desde la base de datos
     getComboBoxes();
-    /*
-    function enviarCorreo(){
-        $.ajax({
-          type: "POST",
-          url: 'script/mailContacto.php',
-          data: $('[name=formContacto]').serialize(),
-          success: function (respuesta) {
-            let z=JSON.parse(respuesta);
-            if (z.cod==0) {
-              Swal.fire({ title: "Listo !", text: z.msg, type: "success", confirmButtonText: "OK" });
-              limpiar();
-            } else if(z.cod==1){
-              Swal.fire({ title: "Error", text: z.msg, type: "error", confirmButtonText: "OK" });
-              
-            } else if(z.cod==2){
-              Swal.fire({ title: z.msg, text: "No olvide completar el campo ReCaptcha", type: "info", confirmButtonText: "OK" });
-              
-            }
-          },
-          error: function () {
-            limpiar();
-            Swal.fire({ title: "Error Fatal!", text: "Intenta Nuevamente", type: "error", confirmButtonText: "OK" });
-          }
-        });
-    }
-    */
-
-    /*
-    $.post("script/cargaProductos.php", function (mensaje) {
-    $("#listaProductos").html(mensaje);
-    });*/
 
     /*
     * Validacion de datos antes de enviar
@@ -81,8 +51,6 @@ $(function(){
         if (msg_error != "") {
             alert(msg_error);
         }else{
-            console.log(e);
-            console.log($(this).serializeArray());
             sendVote();
         }
     });
@@ -129,6 +97,8 @@ var global_comunas = [];
 
 /*
 * Carga comboboxes desde la base de datos
+* @return array global_regiones Arreglo con todas las regiones
+* @return array global_comunas Arreglo con todas las comunas y su region
 */
 function getComboBoxes(){
     $.ajax({
@@ -165,6 +135,7 @@ function getComboBoxes(){
 
 /*
 * Carga voto en la base de datos
+* @param JSON data JSON con toda la informacion del formulario
 */
 function sendVote(){
     var data = {};
@@ -174,25 +145,16 @@ function sendVote(){
     let arr_howto = [];
     let str_tmp = "";
     $("[name='howto']:checked").each(function name(key, params) {
-        console.log($(this).val());
         str_tmp += $(this).val()+",";
-        //arr_howto[] = {name:"howto", value:$(this).val()};
-        //arr_howto.push({name:"howto", value:$(this).val()});
     });
+    str_tmp = str_tmp.substr(0, str_tmp.length - 1);
     data.howto = str_tmp;
-    //arr_form.push(arr_howto);
-
-    console.log(data);
-    console.log(JSON.stringify(data));
-
     $.ajax({
       type: "POST",
       url: 'script/controller/index.php',
       data: {"request" : JSON.stringify(data)},
       success: function (response) {
-        console.log(response);
-        console.log(JSON.parse(response));
-        
+        alert(JSON.parse(response).response);
       },
       error: function ( e ) {
         console.log(e);

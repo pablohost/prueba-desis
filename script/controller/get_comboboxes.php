@@ -1,14 +1,20 @@
 <?php
+//Conexion PDO a la base de datos
 require('database.php');
 
-//$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+//Arreglos con informacion de los combobox
 $comboboxes['regiones'] = getRegiones($conn);
 $comboboxes['comunas'] = getComunas($conn);
 $comboboxes['candidatos'] = getCandidatos($conn);
 
+//Devuelvo arreglo con informacion en formato JSON
 echo json_encode($comboboxes);
 
+/*
+* Busco las regiones en la base de datos
+* @param PDO $conn Variable de conexion PDO a la base de datos
+* @return array $regiones Arreglo con todas las regiones
+*/
 function getRegiones($conn)
 {
 	// iniciar transacción 
@@ -50,6 +56,11 @@ function getRegiones($conn)
 	}
 }
 
+/*
+* Busco las comunas en la base de datos
+* @param PDO $conn Variable de conexion PDO a la base de datos
+* @return array $comunas Arreglo con todas las comunas
+*/
 function getComunas($conn)
 {
 	// iniciar transacción 
@@ -93,6 +104,11 @@ function getComunas($conn)
 	}
 }
 
+/*
+* Busco los candidatos en la base de datos
+* @param PDO $conn Variable de conexion PDO a la base de datos
+* @return array $candidatos Arreglo con todos los candidatos
+*/
 function getCandidatos($conn)
 {
 	// iniciar transacción 
