@@ -32,15 +32,15 @@ $(function(){
     $("#listaProductos").html(mensaje);
     });*/
 
+    /*
+    * Validacion de datos antes de enviar
+    * @param int n_howto Cantidad de checkboxes “Como se enteró de Nosotros” seleccionados
+    * @param string emailCheck regEx para validar email
+    * @param string aliasCheck regEx para validar alias
+    * @param string msg_error Mensaje a enviar en caso de encontrar errores
+    */
     $("#vota-form").submit(function(e) {
         e.preventDefault();
-        /*
-        * Validacion de datos antes de enviar
-        * @param int n_howto Cantidad de checkboxes “Como se enteró de Nosotros” seleccionados
-        * @param string emailCheck regEx para validar email
-        * @param string aliasCheck regEx para validar alias
-        * @param string msg_error Mensaje a enviar en caso de encontrar errores
-        */
         let n_howto = $("[name='howto']:checked").length;
         let emailCheck = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z]+$/;
         let aliasCheck = /^[a-z A-Z0-9]+$/;
@@ -61,6 +61,18 @@ $(function(){
         if (!emailCheck.test($("#email").val())) {
             msg_error += "Email: Deberá validar el correo según estándar. \n";
         }
+        //Combo Box Región No deberá quedar en blanco
+        if ($("#region").val() == "" && $("#region").val() == "0") {
+            msg_error += "Combo Box Región No deberá quedar en blanco \n";
+        }
+        //Combo Box Comuna No deberá quedar en blanco
+        if ($("#comuna").val() == "" && $("#comuna").val() == "0") {
+            msg_error += "Combo Box Comuna No deberá quedar en blanco \n";
+        }
+        //Combo Box Candidato No deberá quedar en blanco
+        if (("#candidato").val() == "" && $("#candidato").val() == "0") {
+            msg_error += "Combo Box Candidato No deberá quedar en blanco \n";
+        }
         //Checkbox “Como se enteró de Nosotros”: Debe elegir al menos dos opciones.
         if (n_howto < 2) {
             msg_error += "Checkbox “Como se enteró de Nosotros”: Debe elegir al menos dos opciones.  \n";
@@ -71,19 +83,16 @@ $(function(){
         }else{
             console.log(e);
             console.log($(this).serialize());
+            $(this).submit();
             //sendVote();
         }
     });
 
+    /*
+    * Carga comunas de la region seleccionada
+    */
     $("#region").change(function(e) {
         e.preventDefault();
-        /*
-        * Validacion de datos antes de enviar
-        * @param int n_howto Cantidad de checkboxes “Como se enteró de Nosotros” seleccionados
-        * @param string emailCheck regEx para validar email
-        * @param string aliasCheck regEx para validar alias
-        * @param string msg_error Mensaje a enviar en caso de encontrar errores
-        */
         if ($(this).val() != 0) {
             $('#comuna').empty();
             for (var i = 0; i < global_comunas.length; i++) {
@@ -119,6 +128,9 @@ $(function(){
 var global_regiones = [];
 var global_comunas = [];
 
+/*
+* Carga comboboxes desde la base de datos
+*/
 function getComboBoxes(){
     $.ajax({
       type: "GET",
